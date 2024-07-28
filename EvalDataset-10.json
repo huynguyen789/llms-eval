@@ -1,0 +1,52 @@
+[
+  {
+    "source": "data/CoT/aqua_rat.json",
+    "instruction": "The salaries of A,B,C are in the ratio 2 : 3 : 5. If the increments of 15%, 10% and 20% are allowed respectively in their salaries, then what will be the new ratio of their salaries?\nAnswer Choices: (A) 3 : 3 : 10 (B) 10 : 11 : 20 (C) 23 : 33 : 60 (D) Cannot be determined (E) None of these",
+    "output": "Let's think about the multi-choice question.\nLet A = 2k, B = 3k and C = 5k.\nA\u2019s new salary = 115\u2044100 of 2k = (115\u2044100 \u00d7 2k) = 23\u204410k\nB\u2019s new salary = 110\u2044100 of 3k = (110\u2044100 \u00d7 3k) = 33\u204410k\nC\u2019s new salary = 120\u2044100 of 5k = (120\u2044100 \u00d7 5k) = 6k\n\u2234 New ratio = 23k\u204410 : 33k\u204410 : 6k = 23 : 33 : 60\nThe answer is C"
+  },
+  {
+    "source": "data/CoT/aqua_rat.json",
+    "instruction": "The workforce of Company X is 60% female. The company hired 30 additional male workers, and as a result, the percent of female workers dropped to 55%.How many employees did the company have after hiring the additional male workers?\nAnswer Choices: (A) 160 (B) 220 (C) 240 (D) 360 (E) 420",
+    "output": "Let's think about the multi-choice question step by step.\nLet's xx be total quantity of employees\n0.6x=females before adding men\n0.55(x+30)=females after adding men\nas quantity of women doesn't change we can make an equation:\n0.6x=0.55(x+30)\n0.05x=16.5\nx=330 - this is quantity of employees before adding 30 men\nSo after adding it will be 360\nThe answer is D"
+  },
+  {
+    "source": "data/CoT/gsm_train.json",
+    "instruction": "Margaux owns a money lending company. Her friend pays her $5 per day, her brother $8 per day, and her cousin $4 per day. How much money will she collect after 7 days?",
+    "output": "Her friend will pay $5 x 7 = $35 after 7 days.\nHer brother will pay $8 x 7 = $56 after 7 days.\nHer cousin will pay $4 x 7 = $28 after 7 days.\nTherefore, she will be able to collect $35 + $56 + $28 = $119 after 7 days.\nThe answer is 119"
+  },
+  {
+    "source": "data/CoT/math50k_camel.json",
+    "instruction": "Consider the graph G below:\n\n![Graph G image](https://i.imgur.com/zaufhFE.png)\n\nWhat is the maximum size of an independent set in G, and which vertices belong to such a set?",
+    "output": "An independent set in a graph is a set of vertices such that no two vertices in the set are adjacent. To find the maximum size of an independent set in G, we can use a greedy algorithm to select non-adjacent vertices.\n\n1. Start with an empty set S.\n2. Choose a vertex with the smallest degree and add it to S. If there are multiple vertices with the same smallest degree, choose any one of them.\n3. Remove the chosen vertex and its neighbors from the graph.\n4. Repeat steps 2 and 3 until there are no vertices left in the graph.\n\nFollowing this algorithm, we can find the maximum size of an independent set in G:\n\n1. S = {}\n2. Choose vertex 1 (smallest degree, 1). S = {1}\n3. Remove vertex 1 and its neighbor (vertex 2) from the graph.\n4. Repeat steps 2 and 3:\n   - Choose vertex 3 (smallest degree, 1). S = {1, 3}\n   - Remove vertex 3 and its neighbor (vertex 4) from the graph.\n   - Choose vertex 5 (smallest degree, 1). S = {1, 3, 5}\n   - Remove vertex 5 and its neighbor (vertex 6) from the graph.\n   - No vertices left in the graph.\n\nThe maximum size of an independent set in G is 3, and the vertices belonging to such a set are {1, 3, 5}."
+  },
+  {
+    "source": "data/PoT/gsm_gpt4.json",
+    "instruction": "Mary, Jess, and Christina want to decorate a party room with balloons. Each person inflates balloons at different speeds, and they only have 30 minutes to inflate as many balloons as possible. Mary inflates 10 balloons per minute, Jess inflates 7 balloons per minute and Christina came 15 minutes late and was the slowest one inflating 4 balloons per minute. How many balloons can they inflate before running out of time? Let's write a Python program.",
+    "output": "# define the time limit and the rates at which each person inflates balloons\ntime_limit = 30\nmary_rate = 10\njess_rate = 7\nchristina_rate = 4\nchristina_late = 15\n\n# calculate the number of balloons each person can inflate\nmary_balloons = time_limit * mary_rate\njess_balloons = time_limit * jess_rate\nchristina_balloons = (time_limit - christina_late) * christina_rate\n\n# calculate the total number of balloons\ntotal_balloons = mary_balloons + jess_balloons + christina_balloons\n\n# print the result\nprint(total_balloons)"
+  },
+  {
+    "source": "data/CoT/MATH_train.json",
+    "instruction": "The domain of the equation $y = \\frac{3x}{2x^2 - 6x + 4}$ is the set of all real numbers with the exception of the values $x = A$ and $x = B$. What is $A + B$?",
+    "output": "The equation is well-defined unless the denominator of the given expression is equal to $0$, that is $2x^2 - 6x + 4 = 0$. Factoring, $2(x-1)(x-2) = 0 \\Longrightarrow x = 1,2$. Hence, $A+B = \\boxed{3}$.\n\n(We can also use Vieta's formulas, which states that the sum of the roots of the equation $ax^2 + bx + c = 0$ is $-b/a$.). The answer is 3"
+  },
+  {
+    "source": "data/PoT/MATH_train.json",
+    "instruction": "Sara used $\\frac{3}{10}$ of a roll of wrapping paper to wrap three presents. If she used the same amount of wrapping paper on each present, what fraction of a roll of wrapping paper did she use on each present? Let's write a Python program.",
+    "output": "# we simply divide the total paper used by the number of presents\ntotal_paper = 3/10\nnum_presents = 3\npaper_per_present = total_paper / num_presents\nprint(paper_per_present)"
+  },
+  {
+    "source": "data/CoT/math50k_camel.json",
+    "instruction": "Suppose that a company's network is prone to two types of cyber attacks, A and B. The probability of an attack of type A occurring on any given day is 0.2, while the probability of an attack of type B occurring is 0.3. Find the probability that the network will experience at least one cyber attack per day.",
+    "output": "To find the probability of at least one cyber attack per day, we can first find the probability of no cyber attacks occurring and then subtract that from 1.\n\nLet's denote the events as follows:\n- A: Attack of type A occurs\n- B: Attack of type B occurs\n- A': No attack of type A occurs\n- B': No attack of type B occurs\n\nWe are given the probabilities of attacks A and B occurring:\nP(A) = 0.2\nP(B) = 0.3\n\nWe can find the probabilities of no attacks A and B occurring:\nP(A') = 1 - P(A) = 1 - 0.2 = 0.8\nP(B') = 1 - P(B) = 1 - 0.3 = 0.7\n\nNow, we need to find the probability of both A' and B' occurring (i.e., no attacks of either type). We will assume that the two types of attacks are independent events. In that case, the probability of both A' and B' occurring is the product of their individual probabilities:\n\nP(A' and B') = P(A') * P(B') = 0.8 * 0.7 = 0.56\n\nFinally, we find the probability of at least one attack occurring by subtracting the probability of no attacks from 1:\n\nP(At least one attack) = 1 - P(A' and B') = 1 - 0.56 = 0.44\n\nSo, the probability that the network will experience at least one cyber attack per day is 0.44."
+  },
+  {
+    "source": "data/CoT/MATH_train.json",
+    "instruction": "Let $f : \\mathbb{R} \\to \\mathbb{R}$ be a function such that\n\\[f(x) f(y) - f(xy) = x + y\\]for all real numbers $x$ and $y.$\n\nLet $n$ be the number of possible values of $f(2),$ and let $s$ be the sum of all possible values of $f(2).$  Find $n \\times s.$",
+    "output": "Setting $x = y = 1,$ we get\n\\[f(1)^2 - f(1) = 2,\\]so $f(1)^2 - f(1) - 2 = 0.$  This factors as $(f(1) + 1)(f(1) - 2) = 0,$ so $f(1) = -1$ or $f(1) = 2.$\n\nSetting $y = 1,$ we get\n\\[f(x) f(1) - f(x) = x + 1\\]for all $x.$  Then $f(x) (f(1) - 1) = x + 1.$  Since $f(1) \\neq 1,$ we can write\n\\[f(x) = \\frac{x + 1}{f(1) - 1}.\\]If $f(1) = -1,$ then\n\\[f(x) = \\frac{x + 1}{-2},\\]and we can check that this function does not work.\n\nIf $f(1) = 2,$ then\n\\[f(x) = x + 1\\]and we can check that this function works.\n\nTherefore, $n = 1$ and $s = 3,$ so $n \\times s = \\boxed{3}.$. The answer is 3"
+  },
+  {
+    "source": "data/CoT/aqua_rat.json",
+    "instruction": "Sandy can do a job in 6 days and Molly can do the same job in 12 days. If they work together, in how many days will they complete the job?\nAnswer Choices: (A) 4 days (B) 6 days (C) 8 days (D) 2 days (E) 9 days",
+    "output": "Let's solve the multi-choice question step by step.\nSandy can do 1/6 of the job each day.\nMolly can do 1/12 of the job each day.\nThe combined rate is 1/6 + 1/12 = 1/4 of the job each day.\nThe job will take 4 days.\nThe answer is A."
+  }
+]
