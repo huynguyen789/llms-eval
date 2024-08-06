@@ -1,0 +1,66 @@
+[
+    {
+    "instruction": "There is a three-digit number. The second digit is four times as big as the third digit, while the first digit is three less than the second digit. What is the number?",
+    "output": "The possible answers are 141 or 582. The best response is to provide both numbers."
+    },
+    {
+    "instruction": "Today i have 3 apples, yesterday I ate one. How many do i have now?",
+    "output": "3"
+    },
+    {
+    "instruction": "If it takes 1 hour to dry 15 towels, how long will it take to dry 20 towels?",
+    "output": "Case 1 (parallel drying): 1 hour\nCase 2 (drying one by one): 1.33 hours\nBest answer: Show both case 1 and case 2"
+    },
+    {
+    "instruction": "Jessica has 2 brothers and a sister. How many sisters each of her brothers have?",
+    "output": "2"
+    },
+    {
+    "instruction": "How many 'r' in the word 'strawberry'?",
+    "output": "3"
+    },
+    {
+    "instruction": "Which is bigger: 9.9 or 9.11",
+    "output": "9.9"
+    },
+    {
+    "instruction": "1+2= 2\n2+3=4\n3+4 = ?",
+    "output": "7"
+    },
+    {
+    "instruction": "Output 10 sentences ENDING with the word apple",
+    "output": "[10 sentences ending with 'apple' would be provided here]"
+    },
+    {
+    "instruction": "Output 10 sentences ENDING with the number from 1 to 10.",
+    "output": "[10 sentences ending with numbers 1 to 10 would be provided here]"
+    },
+    {
+    "instruction": "You are a world-class software engineer. Provide a fully working snake game in python",
+     "output": "```python import pygame; import time; import random; pygame.init(); width = 800; height = 600; black = (0, 0, 0); white = (255, 255, 255); red = (255, 0, 0); green = (0, 255, 0); blue = (0, 0, 255); display = pygame.display.set_mode((width, height)); pygame.display.set_caption('Snake Game'); clock = pygame.time.Clock(); block_size = 20; speed = 15; font = pygame.font.SysFont(None, 35); def snake(block_size, snake_list): for x in snake_list: pygame.draw.rect(display, green, [x[0], x[1], block_size, block_size]); def message(msg, color): mesg = font.render(msg, True, color); display.blit(mesg, [width / 6, height / 3]); def gameLoop(): game_over = False; game_close = False; x1 = width / 2; y1 = height / 2; x1_change = 0; y1_change = 0; snake_List = []; Length_of_snake = 1; foodx = round(random.randrange(0, width - block_size) / 20.0) * 20.0; foody = round(random.randrange(0, height - block_size) / 20.0) * 20.0; while not game_over: while game_close == True: display.fill(black); message(\"You lost! Press Q-Quit or C-Play Again\", red); pygame.display.update(); for event in pygame.event.get(): if event.type == pygame.KEYDOWN: if event.key == pygame.K_q: game_over = True; game_close = False; if event.key == pygame.K_c: gameLoop(); for event in pygame.event.get(): if event.type == pygame.QUIT: game_over = True; if event.type == pygame.KEYDOWN: if event.key == pygame.K_LEFT: x1_change = -block_size; y1_change = 0; elif event.key == pygame.K_RIGHT: x1_change = block_size; y1_change = 0; elif event.key == pygame.K_UP: y1_change = -block_size; x1_change = 0; elif event.key == pygame.K_DOWN: y1_change = block_size; x1_change = 0; if x1 >= width or x1 < 0 or y1 >= height or y1 < 0: game_close = True; x1 += x1_change; y1 += y1_change; display.fill(black); pygame.draw.rect(display, blue, [foodx, foody, block_size, block_size]); snake_Head = []; snake_Head.append(x1); snake_Head.append(y1); snake_List.append(snake_Head); if len(snake_List) > Length_of_snake: del snake_List[0]; for x in snake_List[:-1]: if x == snake_Head: game_close = True; snake(block_size, snake_List); pygame.display.update(); if x1 == foodx and y1 == foody: foodx = round(random.randrange(0, width - block_size) / 20.0) * 20.0; foody = round(random.randrange(0, height - block_size) / 20.0) * 20.0; Length_of_snake += 1; clock.tick(speed); pygame.quit(); quit(); gameLoop(); ```"
+    },
+    {
+    "instruction": "Suppose I have a cabbage, a goat and a lion, and I need to get them across a river. I have a boat that can only carry myself and a single other item. I am not allowed to leave the cabbage and lion alone together, and I am not allowed to leave the lion and goat alone together. How can I safely get all three across?",
+    "output": "1. Take the lion across the river first and leave it on the other side.\n2. Go back alone and take the goat across the river.\n3. Leave the goat on the other side and take the lion back.\n4. Leave the lion on the starting side and take the cabbage across the river.\n5. Leave the cabbage with the goat and return alone to pick up the lion.\n6. Take the lion across the river."
+    },
+    {
+    "instruction": "Vegan Steaks had the best year ever, with sales of $4,500,000 and operating profit of $950,000. The balance sheet at the beginning of the year showed assets used in production with a cost of $20,000,000 and accumulated depreciation of $5,000,000. The company didn't buy any assets during the year but did have depreciation expense of $1,000,000. Calculate the ROI for the year.",
+    "output": "6.55%"
+    },
+    {
+    "instruction": "There are 2 killers in the room. There is one guy come in the room, he kill 1 killer. How many killer left in the room?",
+    "output": "2"
+    },
+    {
+    "instruction": "Turn this into json format:Bookstore Inventory:\n- Title: 'To Kill a Mockingbird', Author: Harper Lee, Quantity: 30\n- Title: '1984', Author: George Orwell, Quantity: 15\n- Title: 'The Great Gatsby', Author: F. Scott Fitzgerald, Quantity: 20",
+    "output":  "{'Bookstore Inventory': [{'Title': 'To Kill a Mockingbird', 'Author': 'Harper Lee', 'Quantity': 30}, {'Title': '1984', 'Author': 'George Orwell', 'Quantity': 15}, {'Title': 'The Great Gatsby', 'Author': 'F. Scott Fitzgerald', 'Quantity': 20}]}"
+    },
+    {
+    "instruction": "What is the maximum annual vacation accrual for full-time employees with more than 10 years of credited service? Cite the document source.",
+    "output": "200 Hours (25 Days), according to Document 31."
+    },
+    {
+    "instruction": "What happens if I used vacation that was not accrued, and I leave the company?",
+    "output": "Upon separation of employment for any reason, either voluntary or involuntary, the remaining accrued and unused vacation balance will be paid out on the final paycheck. For non-California employees carrying a negative vacation balance, if employment is terminated for any reason, acknowledgment of this policy authorizes any amounts owed to be withheld from the final paycheck. Any additional monies owed will be due to Redhorse within 30 days of the last day of work. For California employees carrying a negative vacation balance, if employment is terminated for any reasons, acknowledgement of this policy states that all monies owed will be due to Redhorse within 30 days of the last day worked. (a complete answer must mention both cali and non-cali parts.)"
+    }
+]
