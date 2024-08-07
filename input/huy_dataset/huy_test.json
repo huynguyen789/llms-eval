@@ -25,7 +25,7 @@
     },
     {
     "instruction": "1+2= 2\n2+3=4\n3+4 = ?",
-    "output": "7"
+    "output": "the pattern is adding then minus 1. Thus, 3+4=7, 7-1 = 6. Final answer"
     },
     {
     "instruction": "Output 10 sentences ENDING with the word apple",
