@@ -1,2 +1,5 @@
 
 .env
+
+#ignore all excel files
+*.xlsx

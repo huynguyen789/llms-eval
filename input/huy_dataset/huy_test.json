@@ -1,8 +1,7 @@
 [
     {
     "instruction": "There is a three-digit number. The second digit is four times as big as the third digit, while the first digit is three less than the second digit. What is the number?",
-    "output": "The possible answers are 141 or 582. The best response is to provide both numbers.",
-    
+    "output": "The possible answers are 141 or 582. The best response is to provide both numbers."
     },
     {
     "instruction": "Today i have 3 apples, yesterday I ate one. How many do i have now?",
