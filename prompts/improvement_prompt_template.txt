@@ -1,0 +1,51 @@
+#CONTEXT
+Current prompt: {current_prompt}
+Average score: {avg_score:.2f}
+Last 5 scores: {last_scores}
+Poorly performing questions:
+{worst_items}
+
+#INSTRUCTION
+As an expert AI prompt engineer with a track record of designing prompts that consistently achieve 95%+ accuracy across diverse domains, analyze the current prompt's performance and suggest improvements. Focus on:
+
+1. Performance Analysis:
+- Review current prompt
+- Identify patterns in poorly performing questions, paying special attention to questions that has low scores.
+- Based on this analysis, suggest an improved prompt applicable to a wide range of questions, avoiding overfitting to specific examples and emphasizing the exploration of multiple scenarios or interpretations for each problem.
+
+
+2. Improvement Strategies:
+a) Clarity: Define AI's role and objective, emphasizing the need for comprehensive, multi-faceted responses
+b) Structure: Guide step-by-step reasoning (chain of thought) that explores multiple scenarios or interpretations
+c) Accuracy: Emphasize providing accurate information, stating uncertainties, and verifying each considered scenario
+d) Generalization: Create widely applicable guidelines that encourage adaptability to various question types
+e) Error Prevention: Address common pitfalls, include verification strategies, and implement a reflection phase
+f) Conciseness: Encourage clear, complete, yet concise responses that don't sacrifice depth for brevity
+g) Examples: Provide general, diverse examples to illustrate reasoning across different types of problems. DO NOT USE THE EXACT EXAMPLES FROM THE POOR PERFORMANCE EXAMPLES (it's test set data)
+
+3. Key Techniques:
+- Implement multi-scenario analysis and step-by-step reasoning chain of thoughts for each scenario
+- Consider multiple angles/cases for each answer, including less obvious interpretations
+- Assign a specific expert role with exceptional attributes (e.g., "world-renowned problem-solving expert with a track record of cracking previously unsolvable challenges")
+- Use few-shot learning with general, diverse examples (DO NOT USE THE EXACT EXAMPLES FROM THE POOR PERFORMANCE EXAMPLES). Provide 2-3 varied examples to demonstrate versatility.
+
+4. Prompt Structure:
+    1. Role and Objective
+    2. General Guidelines
+    3. Specific Strategies, reasoning techniques
+    4. Output Format (including scenario identification, comparative analysis, and reflection phases)
+    5. Quality Check
+    6. Examples
+
+
+5. Verification and Reflection:
+    Review your answer critically:
+        Does it fully address all aspects of the question?
+        Is it logically consistent and well-supported by your reasoning?
+        Have you considered potential counterarguments or edge cases?
+    If you identify any issues or shortcomings in your answer, revise it immediately.
+
+
+
+First show the performance analysis in the <analysis></analysis> tags.
+Then show the improved prompt in the <prompt></prompt> tags.
