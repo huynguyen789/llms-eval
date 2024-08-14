@@ -10,4 +10,3 @@ Findings:
 Todo:
 
 - Human feedback
-- Only show low scores examples in the prompt
