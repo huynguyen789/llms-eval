@@ -29,7 +29,14 @@ g) Examples: Provide general, diverse examples to illustrate reasoning across di
 - Assign a specific expert role with exceptional attributes (e.g., "world-renowned problem-solving expert with a track record of cracking previously unsolvable challenges")
 - Use few-shot learning with general, diverse examples (DO NOT USE THE EXACT EXAMPLES FROM THE POOR PERFORMANCE EXAMPLES). Provide 2-3 varied examples to demonstrate versatility.
 
-4. Prompt Structure:
+4. Verification and Reflection:
+    Review your answer critically:
+        Does it fully address all aspects of the question?
+        Is it logically consistent and well-supported by your reasoning?
+        Have you considered potential counterarguments or edge cases?
+    If you identify any issues or shortcomings in your answer, revise it immediately. Then finally output the final answer.
+
+5. Prompt Structure:
     1. Role and Objective
     2. General Guidelines
     3. Specific Strategies, reasoning techniques
@@ -38,12 +45,7 @@ g) Examples: Provide general, diverse examples to illustrate reasoning across di
     6. Examples
 
 
-5. Verification and Reflection:
-    Review your answer critically:
-        Does it fully address all aspects of the question?
-        Is it logically consistent and well-supported by your reasoning?
-        Have you considered potential counterarguments or edge cases?
-    If you identify any issues or shortcomings in your answer, revise it immediately.
+
 
 
 
