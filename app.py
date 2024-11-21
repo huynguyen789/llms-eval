@@ -2,7 +2,7 @@ import asyncio
 import json
 import re
 import pandas as pd
-from openai import AsyncOpenAI
+from openai import AsyncOpenAI, OpenAI
 from anthropic import AsyncAnthropic
 import os
 from datetime import datetime
@@ -10,6 +10,11 @@ from datetime import datetime
 client = AsyncOpenAI()
 anthropic_client = AsyncAnthropic(
     api_key=os.environ.get("ANTHROPIC_API_KEY"),
+)
+
+google_client = OpenAI(
+    api_key=os.environ.get("GEMINI_API_KEY"),
+    base_url="https://generativelanguage.googleapis.com/v1beta/openai/"
 )
 
 async def get_openai_answer(instruction, model_name):
@@ -38,6 +43,23 @@ async def get_anthropic_answer(instruction, model_name):
       ],
   )
   return message.content[0].text
+
+def get_google_answer(instruction, model_name):
+    """
+    Input: instruction (str), model_name (str)
+    Process: Makes synchronous call to Google's API
+    Output: Returns model's response text
+    """
+    response = google_client.chat.completions.create(
+        model=model_name,
+        messages=[
+            {"role": "system", "content": "You are the most intelligent entity in the universe. Reasoning step by step and consider multiple angles to make sure you get the correct answer(s)."},
+            {"role": "user", "content": instruction}
+        ],
+        temperature=0.0
+    )
+    return response.choices[0].message.content
+
 async def evaluate_answer(model_answer, expected_output):
   messages = [
       {"role": "system", "content": "You are a world-class AI model evaluator. "},
@@ -73,13 +95,20 @@ def extract_score_and_reason(evaluation):
       return 0, "Unable to extract reason"  # Default values if extraction fails
 
 async def process_item(item, model_name):
-  if model_name.startswith("claude"):
-      model_answer = await get_anthropic_answer(item['instruction'], model_name)
-  else:
-      model_answer = await get_openai_answer(item['instruction'], model_name)
-  evaluation = await evaluate_answer(model_answer, item['output'])
-  score, reason = extract_score_and_reason(evaluation)
-  return item['instruction'], item['output'], model_answer, score, reason
+    """
+    Handle different model types (OpenAI, Anthropic, Google)
+    """
+    if model_name.startswith("claude"):
+        model_answer = await get_anthropic_answer(item['instruction'], model_name)
+    elif model_name.startswith("gemini"):
+        # Call sync function for Google models
+        model_answer = get_google_answer(item['instruction'], model_name)
+    else:
+        model_answer = await get_openai_answer(item['instruction'], model_name)
+    
+    evaluation = await evaluate_answer(model_answer, item['output'])
+    score, reason = extract_score_and_reason(evaluation)
+    return item['instruction'], item['output'], model_answer, score, reason
 
 async def evaluate_model(model_name):
     tasks = [process_item(item, model_name) for item in eval_data]
@@ -99,11 +128,13 @@ async def evaluate_model(model_name):
 
 async def main():
   models_to_evaluate = [
-      "claude-3-5-sonnet-20240620",
-      "gpt-4o-mini", 
-      "gpt-4o-2024-08-06", 
-      "gpt-4o-2024-05-13", 
-      "gpt-4-0125-preview"
+    #   "claude-3-5-sonnet-20241022",
+    #     "gpt-4o-2024-11-20",
+    #   "gpt-4o-mini", 
+    #   "gpt-4o", 
+    #   "gpt-4-0125-preview",
+      "gemini-1.5-pro",  # Add Google models
+      "gemini-1.5-flash"
   ]
   results = {}
 
