@@ -3,3 +3,5 @@
 
 #ignore all excel files
 *.xlsx
+
+venv/
