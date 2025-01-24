@@ -17,10 +17,42 @@ nvidia_client = OpenAI(
     api_key=os.environ.get("NVIDIA_API_KEY")
 )
 
+async def get_deepseek_answer(instruction, model_name):
+    """
+    Input: instruction (str), model_name (str)
+    Output: formatted answer with final_answer tags
+    Logic: 
+    - Creates async client for DeepSeek
+    - Streams response
+    - Returns only the content (final answer) wrapped in tags
+    """
+    async_client = AsyncOpenAI(
+        api_key=os.environ.get("DEEPSEEK_API_KEY"),
+        base_url="https://api.deepseek.com"
+    )
+
+    messages = [{"role": "user", "content": f"Answer the following question. Provide your final answer (A, B, C, or D) in <final_answer></final_answer> tags.\n\n{instruction}"}]
+    response = await async_client.chat.completions.create(
+        model=model_name,
+        messages=messages,
+        stream=True
+    )
+
+    content = ""
+    async for chunk in response:
+        if chunk.choices[0].delta.content:
+            content += chunk.choices[0].delta.content
+
+    # Format to match expected output with final_answer tags
+    if "<final_answer>" not in content:
+        content = f"<final_answer>{content}</final_answer>"
+    
+    return content
+
 async def get_openai_answer(instruction, model_name):
     messages = [
         {"role": "system", "content": "You are the most intelligent entity in the universe. Reasoning step by step and consider multiple angles to make sure you get the correct answer(s)."},
-        {"role": "user", "content": f"Answer the following question. Provide your reasoning in <reasoning></reasoning> tags, and your final answer (A, B, C, or D) in <final_answer></final_answer> tags.\n\n{instruction}"}
+        {"role": "user", "content": f"Answer the following question. Provide your reasoning in <reasoning></reasoning> tags, and your final answer (A, B, C, or D) in <final_answer></final_answer> tags, only 1 letter answer, nothing else!.\n\n{instruction}"}
     ]
     response = await async_client.chat.completions.create(
         model=model_name,
@@ -32,14 +64,13 @@ async def get_openai_answer(instruction, model_name):
 
 def get_o1_answer(instruction, model_name):
     messages = [
-        {"role": "system", "content": "You are the most intelligent entity in the universe. Reasoning step by step and consider multiple angles to make sure you get the correct answer(s)."},
-        {"role": "user", "content": f"Answer the following question. Provide your reasoning in <reasoning></reasoning> tags, and your final answer (A, B, C, or D) in <final_answer></final_answer> tags.\n\n{instruction}"}
+        {"role": "user", "content": f"You are the most intelligent entity in the universe. Reasoning step by step and consider multiple angles to make sure you get the correct answer(s).\n\n Answer the following question. Provide your reasoning in <reasoning></reasoning> tags, and your final answer (A, B, C, or D) in <final_answer></final_answer> tags.\n\n{instruction}"}
     ]
     response = sync_client.chat.completions.create(
         model=model_name,
         messages=messages,
-        temperature=0.0,
     )
+    print(response.choices[0].message.content)
     return response.choices[0].message.content
 
 def get_nvidia_answer(instruction, model_name):
@@ -70,15 +101,45 @@ async def get_anthropic_answer(instruction, model_name):
     return message.content[0].text
 
 def extract_final_answer(model_answer):
+    """
+    Input: model_answer (str)
+    Output: cleaned single letter answer (A, B, C, or D)
+    Logic: 
+    - Extract text between final_answer tags
+    - Clean and extract just the letter answer
+    - Handle various formats (A, A), C., etc.)
+    """
     match = re.search(r'<final_answer>(.*?)</final_answer>', model_answer, re.DOTALL)
     if match:
-        return match.group(1).strip()
+        answer_text = match.group(1).strip()
+        
+        # Try to extract just the letter answer using various patterns
+        letter_patterns = [
+            r'^([A-D])[).]\s*.*$',  # Matches "A) answer" or "A. answer"
+            r'^([A-D])\s*$',        # Matches just "A"
+            r'.*\b([A-D])[).]\s*.*$',  # Matches letter anywhere in text
+            r'.*\b([A-D])\s*$'      # Matches letter at end of text
+        ]
+        
+        for pattern in letter_patterns:
+            letter_match = re.search(pattern, answer_text, re.IGNORECASE)
+            if letter_match:
+                return letter_match.group(1).upper()
+        
+        # If no pattern matches, log the unmatched answer
+        print(f"Warning: Could not extract letter from answer: {answer_text}")
+        return "N/A"
     else:
         print(f"Warning: Could not extract final answer from model response: {model_answer}")
         return "N/A"
-
 async def process_item(item, model_name):
-    if model_name.startswith("claude"):
+    if model_name.startswith("deepseek"):
+        if not hasattr(process_item, "deepseek_printed"):
+            print(f"Starting to get answers from DeepSeek model: {model_name}")
+            process_item.deepseek_printed = True
+        model_answer = await get_deepseek_answer(item['instruction'], model_name)
+
+    elif model_name.startswith("claude"):
         if not hasattr(process_item, "anthropic_printed"):
             print(f"Starting to get answers from Anthropic model: {model_name}")
             process_item.anthropic_printed = True
@@ -128,12 +189,12 @@ async def evaluate_model(model_name):
 
 async def main():
     models_to_evaluate = [
-        "nvidia/llama-3.1-nemotron-70b-instruct",
-        "o1-preview",
-        "claude-3-5-sonnet-20240620",
-        "gpt-4o-mini", 
-        "gpt-4o",  
-        "gpt-4-0125-preview"
+        # "o1-preview",
+        "deepseek-reasoner"  ,
+        "claude-3-5-sonnet-20241022",
+        "gpt-4o",
+        
+        
     ]
     results = {}
 
@@ -178,8 +239,7 @@ try:
 except NameError:
     is_notebook = False
 
-if __name__ == "__main__":
-    if is_notebook:
-        results, summary_df = await main()
-    else:
-        results, summary_df = asyncio.run(main())
+if is_notebook:
+    results, summary_df = await main()
+else:
+    results, summary_df = asyncio.run(main())
