@@ -129,12 +129,12 @@ async def evaluate_model(model_name):
 
 async def main():
     models_to_evaluate = [
-        "nvidia/llama-3.1-nemotron-70b-instruct",
-        "o1-preview",
+        # "nvidia/llama-3.1-nemotron-70b-instruct",
+        # "o1-preview",
         "claude-3-5-sonnet-20240620",
         "gpt-4o-mini", 
-        "gpt-4o",  
-        "gpt-4-0125-preview"
+        # "gpt-4o",  
+        # "gpt-4-0125-preview"
     ]
     results = {}
 
@@ -181,6 +181,9 @@ except NameError:
 
 if __name__ == "__main__":
     if is_notebook:
-        results, summary_df = await main()
+        # In Jupyter notebooks, we need to use asyncio.ensure_future or similar
+        import nest_asyncio
+        nest_asyncio.apply()
+        results, summary_df = asyncio.run(main())
     else:
         results, summary_df = asyncio.run(main())
